@@ -43,34 +43,36 @@ sample estimates:
 
 # Question 3 
 fish_samples= c(0:340)
-probs = mapply(dbinom, fish_samples, size+340, prob = 0.43)
-sum(probs)
+probs = mapply(dbinom, fish_samples, size=340, prob = 0.43)
+which.max(probs)
 
 
 # Question 2
 
-get_all_perms <- function(size){
-  rep(list(0:9), size)%>%
-    expand.grid() %>%
-    nrow()
+get_all_perms = function(size = 4){
+  digits = 0:9
+  all_perms = replicate(size, digits, simplify = FALSE) %>% expand.grid()
+  dim(all_perms)[1]
 }
+get_all_perms(6)
 
 get_all_perms(size = 4)
 
 # Question 1
 
-get_all_perms <- function(x){
-  rep(list(0:9), 4)%>%
-    expand.grid()%>%
-    nrow()
+get_all_perms <- function(){
+  digits = 0:9
+  all_perms = expand.grid(digits, digits, digits, digits)
+  dim(all_perms)[1]
 }
 get_all_perms()
 
 # Question 0 
 
-list_na <- function(x){
-  replace(x, is.na(list_na), mean(list_na, na.rm = TRUE))
+list_na <- c(1, NA, 2, 3, 2, 2, NA)
+replace_na_mean<- function(x){
+  x[is.na(x)] = mean(x, na.rm = TRUE)
+  x
 }
 replace_na_mean(c(1, NA, 2, 3, 2, 2, NA))
 
-}
